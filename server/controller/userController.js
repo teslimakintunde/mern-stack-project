@@ -19,3 +19,14 @@ export const createNewUser = async (req, res) => {
     console.log({ errorMessage: error.message });
   }
 };
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const allUsers = await User.find();
+    if (!allUsers || allUsers.length === 0)
+      return res.status(404).json({ message: "User data Not Found" });
+    res.status(200).json(allUsers);
+  } catch (error) {
+    res.status(500).json({ errorMessage: error.message });
+  }
+};
