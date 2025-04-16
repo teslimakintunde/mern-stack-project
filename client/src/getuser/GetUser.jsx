@@ -7,8 +7,10 @@ const GetUser = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const result = await axios.get("http://localhost:3000/api/users");
-        setUsers(result.data);
+        const response = await axios.get(
+          `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users`
+        );
+        setUsers(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -18,7 +20,7 @@ const GetUser = () => {
   return (
     <div className="userTable">
       <button type="button" className="btn btn-primary">
-        Add User <i class="fa-solid fa-user-plus"></i>
+        Add User <i className="fa-solid fa-user-plus"></i>
       </button>
       <table className="table table-bordered">
         <thead>
@@ -40,10 +42,10 @@ const GetUser = () => {
                 <td>{user.address}</td>
                 <td className="actionButtons">
                   <button type="button" className="btn btn-info">
-                    <i class="fa-solid fa-pen-to-square"></i>
+                    <i className="fa-solid fa-pen-to-square"></i>
                   </button>
                   <button type="button" className="btn btn-danger">
-                    <i class="fa-solid fa-trash"></i>
+                    <i className="fa-solid fa-trash"></i>
                   </button>
                 </td>
               </tr>
