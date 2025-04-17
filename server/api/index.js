@@ -19,10 +19,21 @@ if (!MONGODB_URL) {
 }
 
 app.use("/api", router);
+// mongoose
+//   .connect(MONGODB_URL)
+//   .then(() => {
+//     console.log("database connected successfully");
+//     app.listen(PORT, console.log(`server is running on PORT ${PORT}`));
+//   })
+//   .catch((error) => console.log(error));
 mongoose
-  .connect(MONGODB_URL)
-  .then(() => {
-    console.log("database connected successfully");
-    app.listen(PORT, console.log(`server is running on PORT ${PORT}`));
+  .connect(MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
   })
-  .catch((error) => console.log(error));
+  .then(() => console.log("Database connected"))
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+    process.exit(1); // Exit if DB connection fails
+  });
