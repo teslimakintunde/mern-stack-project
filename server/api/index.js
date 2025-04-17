@@ -23,13 +23,12 @@ let cachedDb = null;
 
 async function connectDB() {
   if (cachedDb) return cachedDb;
-
   try {
     const conn = await mongoose.connect(MONGODB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       serverSelectionTimeoutMS: 5000,
-      bufferCommands: false, // Important for serverless
+      bufferCommands: false,
     });
     cachedDb = conn;
     console.log("MongoDB connected successfully");
@@ -40,7 +39,7 @@ async function connectDB() {
   }
 }
 // Routes
-app.use("/api", router);
+app.use("/", router);
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
@@ -51,9 +50,10 @@ app.get("/api/health", (req, res) => {
 export default async (req, res) => {
   try {
     await connectDB();
-    return app(req, res);
+    app(req, res);
   } catch (err) {
-    return res.status(500).json({ error: "Database connection failed" });
+    console.error("Serverless handler error:", err);
+    res.status(500).json({ error: "Database connection failed" });
   }
 };
 
