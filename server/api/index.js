@@ -1,16 +1,18 @@
 import express from "express";
-import bodyParser from "body-parser";
+// import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import router from "../routes/userRoutes.js";
 import corsOptions from "../config/corsOptions.js";
 import cors from "cors";
+import credentials from "../middleware/credential.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(cors(corsOptions));
-app.use(bodyParser.json());
+app.use(credentials);
+app.use(express.json());
 const MONGODB_URL = process.env.MONGODB_URL;
 
 if (!MONGODB_URL) {
@@ -42,7 +44,7 @@ async function connectDB() {
 app.use("/", router);
 
 // Health check endpoint
-app.get("/api/health", (req, res) => {
+app.get("/health", (req, res) => {
   res.status(200).json({ status: "OK" });
 });
 

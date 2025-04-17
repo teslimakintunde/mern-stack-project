@@ -19,7 +19,7 @@ const AddUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axios
-      .post(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/user`, user)
+      .post(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/user`, user)
       .then((response) => {
         toast.success(response.data.message, { position: "top-right" });
         console.log("user created successfully");

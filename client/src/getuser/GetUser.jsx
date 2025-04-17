@@ -10,7 +10,7 @@ const GetUser = () => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/users`
+          `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/users`
         );
         setUsers(response.data);
       } catch (error) {
@@ -24,7 +24,7 @@ const GetUser = () => {
       .delete(
         `${
           import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/api/delete/user/${userId}`
+        }/delete/user/${userId}`
       )
       .then((response) => {
         setUsers((prevUser) => prevUser.filter((user) => user._id !== userId));

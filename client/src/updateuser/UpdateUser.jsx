@@ -15,7 +15,7 @@ const UpdateUser = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/user/${id}`)
+      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/user/${id}`)
       .then((response) => {
         setUser(response.data);
       })
@@ -30,9 +30,7 @@ const UpdateUser = () => {
     e.preventDefault();
     await axios
       .put(
-        `${
-          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/api/update/user/${id}`,
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/update/user/${id}`,
         user
       )
       .then((response) => {
