@@ -5,8 +5,8 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: "../.vercel/output/static",
+    outDir: "dist", // Changed to relative path
     emptyOutDir: true,
-    sourcemap: true, // Recommended for debugging
+    sourcemap: true,
   },
 });
