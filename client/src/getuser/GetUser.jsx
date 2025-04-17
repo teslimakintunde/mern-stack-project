@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./get-user.css";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const GetUser = () => {
   const [users, setUsers] = useState([]);
@@ -18,6 +19,19 @@ const GetUser = () => {
     };
     fetchUsers();
   }, []);
+  const deleteUser = async (userId) => {
+    await axios
+      .delete(
+        `${
+          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
+        }/api/delete/user/${userId}`
+      )
+      .then((response) => {
+        setUsers((prevUser) => prevUser.filter((user) => user._id !== userId));
+        toast.success(response.data.message, { position: "top-right" });
+      })
+      .catch((error) => console.log(error));
+  };
   return (
     <div className="userTable">
       <Link to={"/add"} type="button" className="btn btn-primary">
@@ -42,10 +56,18 @@ const GetUser = () => {
                 <td>{user.email}</td>
                 <td>{user.address}</td>
                 <td className="actionButtons">
-                  <button type="button" className="btn btn-info">
+                  <Link
+                    to={`/update/` + user._id}
+                    type="button"
+                    className="btn btn-info"
+                  >
                     <i className="fa-solid fa-pen-to-square"></i>
-                  </button>
-                  <button type="button" className="btn btn-danger">
+                  </Link>
+                  <button
+                    onClick={() => deleteUser(user._id)}
+                    type="button"
+                    className="btn btn-danger"
+                  >
                     <i className="fa-solid fa-trash"></i>
                   </button>
                 </td>
